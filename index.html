@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>School Feedback System</title>
+ <style>
+ body {
+ font-family: Arial, sans-serif;
+ background-color: #f4f4f4;
+ margin: 0;
+ padding: 0;
+ }
+ .container {
+ width: 80%;
+ margin: 0 auto;
+ padding: 20px;
+ background-color: #fff;
+ box-shadow: 0 0 10px rgba(0,0,0,0.1);
+ }
+ h1 {
+ text-align: center;
+ color: #333;
+ }
+ .feedback-box, .suggestion-box {
+ background-color: #f9f9f9;
+ border: 1px solid #ccc;
+ padding: 15px;
+ margin-bottom: 10px;
+ border-radius: 5px;
+ }
+ button {
+ background-color: #28a745;
+ color: white;
+ padding: 10px;
+ border: none;
+ border-radius: 5px;
+ cursor: pointer;
+ }
+ button:hover {
+ background-color: #218838;
+ }
+ .nav-buttons {
+ display: flex;
+ justify-content: space-between;
+ }
+ </style>
+</head>
+<body>
+
+ <div class="container">
+ <h1>School Feedback System</h1>
+ <div class="feedback-box">
+ <h2>Feedback</h2>
+ <textarea id="feedback" rows="4" style="width: 100%;"
+placeholder="Enter your feedback here..."></textarea>
+ <button onclick="submitFeedback()">Submit Feedback</button>
+ </div>
+ <div class="suggestion-box">
+ <h2>Suggestions</h2>
+ <textarea id="suggestion" rows="4" style="width: 100%;"
+placeholder="Enter your suggestions here..."></textarea>
+ <button onclick="submitSuggestion()">Submit Suggestion</button>
+ </div>
+ <div class="nav-buttons">
+ <button onclick="location.href='feedback_history.php'">View 
+Feedback</button>
+ <button onclick="location.href='feedback_history.php'">View 
+Suggestions</button>
+ </div>
+ </div>
+ <script>
+
+ function showAlert(message) {
+ alert(message);
+ }
+ function submitFeedback() {
+ const feedback = document.getElementById('feedback').value;
+ if (feedback) {
+ // Send to server
+ const xhr = new XMLHttpRequest();
+ xhr.open("POST", "submit.php", true);
+ xhr.setRequestHeader("Content-Type", "application/x-www-formurlencoded");
+ xhr.onload = function() {
+ if (xhr.status === 200) {
+ showAlert("Thank you! ");
+ document.getElementById('feedback').value = '';
+
+ }
+ };
+ xhr.send("type=feedback&message=" + 
+encodeURIComponent(feedback));
+ } else {
+ showAlert("Please enter your feedback!");
+ }
+
+ }
+
+ function submitSuggestion() {
+ const suggestion = document.getElementById('suggestion').value;
+ if (suggestion) {
+ // Send to server
+ const xhr = new XMLHttpRequest();
+ xhr.open("POST", "submit.php", true);
+ xhr.setRequestHeader("Content-Type", "application/x-www-formurlencoded");
+ xhr.onload = function() {
+ if (xhr.status === 200) {
+ showAlert("Thank you! ");
+ document.getElementById('suggestion').value = ''; // 
+
+ }
+ };
+ xhr.send("type=suggestion&message=" + 
+encodeURIComponent(suggestion));
+ } else {
+ showAlert("Please enter your suggestion!");
+ }
+ }
+ </script>
+</body>
+</html>
